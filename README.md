@@ -45,6 +45,56 @@ cd tg-contacts-exporter
 3. Create a Google Sheet named `Telegram Contacts` and share it with your service account email.
 4. **Important:** Activate the Google Drive API for your Google Cloud project at https://console.cloud.google.com/apis/library/drive.googleapis.com
 
+## Running the Export
+
+1. Run the script:
+   ```bash
+   python export_telegram_contacts.py
+   ```
+
+2. The script will:
+   - First export your added contacts (this may take several minutes due to Telegram's rate limits)
+   - Then ask if you want to export users you've messaged but haven't added as contacts
+   - Process messaged users in batches of 50 with 60-second pauses between batches
+
+**Important Notes:**
+- The export process may take 15-20 minutes or longer depending on your number of contacts
+- Telegram's rate limits will cause the script to pause periodically (this is normal)
+- You'll see progress updates in the terminal
+- The script handles rate limits automatically - just let it run
+- Check `telegram_export.log` for detailed progress information
+
+## What to Expect
+
+When running the script, you'll see:
+1. Connection to Telegram
+2. Number of contacts found
+3. Progress updates with occasional pauses due to rate limits
+4. Option to export messaged users
+5. Batch processing updates if exporting messaged users
+6. Final confirmation when export is complete
+
+**Processing Times:**
+- Added contacts: ~1-2 minutes per 100 contacts (including rate limit pauses)
+- Messaged users: ~3-4 minutes per 50 users (including batch pauses)
+- Total time depends on your number of contacts and messaged users
+
+**Rate Limit Behavior:**
+- The script will automatically pause when hitting Telegram's rate limits
+- Pauses typically last 25-30 seconds
+- Progress updates will show remaining time
+- No action needed - just let the script continue running
+
+The exported data includes:
+- Username
+- First Name
+- Last Name
+- Phone Number
+- Bio
+- Company/Project (if detected in bio)
+- Category (based on bio keywords)
+- Contact Type (Added/Messaged)
+
 ## Setup Instructions
 
 1. Install dependencies:
@@ -77,34 +127,6 @@ cd tg-contacts-exporter
      GOOGLE_SHEET_NAME=Telegram Contacts
      ```
 
-### ⚡️ Testing with a Few Contacts (Recommended)
-
-**Note:** Running the script for all contacts may take a few minutes (or longer if you have many contacts), due to Telegram's rate limits. It's a good idea to test with just 10 contacts first:
-
-1. Open `export_telegram_contacts.py` in a text editor.
-2. Find the line:
-   ```python
-   for user in contacts.users:
-   ```
-3. Change it to process only the first 10 contacts:
-   ```python
-   for user in contacts.users[:10]:
-   ```
-4. Run the script and check your Google Sheet.
-5. Once you confirm it works, change the line back to process all contacts:
-   ```python
-   for user in contacts.users:
-   ```
-
-5. Run the script:
-   ```bash
-   python export_telegram_contacts.py
-   ```
-
-**Check your Google Sheet for your exported contacts!**
-
-Automatically export and categorize your Telegram contacts to Google Sheets.
-
 ## Features
 
 - Direct integration with Telegram API
@@ -113,12 +135,16 @@ Automatically export and categorize your Telegram contacts to Google Sheets.
 - Detailed logging
 - Error handling
 - Environment variable configuration
+- Support for both added contacts and messaged users
+- Automatic rate limit handling
+- Batch processing for large contact lists
 
 ## Customization
 
 - Modify the `categorize_contact` method in `export_telegram_contacts.py` to change categorization logic
 - Add more fields to export by modifying the headers and row data
 - Adjust logging level in the script if needed
+- Modify batch size and delay times for rate limit handling
 
 ## Troubleshooting
 
@@ -126,12 +152,16 @@ Automatically export and categorize your Telegram contacts to Google Sheets.
 - Ensure all environment variables are set correctly
 - Verify Google Sheets API credentials and permissions
 - Make sure the Google Sheet exists and is shared with the service account
+- If you see rate limit messages, this is normal - the script will handle them automatically
+- If the script seems stuck, check the log file for progress updates
 
 ## Security Notes
 
 - Never commit your `.env` file or `credentials.json` to version control
 - Keep your API credentials secure
 - Regularly rotate your API credentials if possible
+- The script uses Telegram's official API and follows their rate limits
+- No data is stored locally except for the session file
 
 ## Screenshots
 
@@ -145,4 +175,4 @@ Automatically export and categorize your Telegram contacts to Google Sheets.
 
 ### .env Example File
 ![.env.example file](screenshots/env-example.png)
-*Example .env file—fill in your own credentials as shown.* 
+*Example .env file—fill in your own credentials as shown.*
