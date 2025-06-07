@@ -1,5 +1,22 @@
 # Telegram Contacts Exporter
 
+## 🐍 Install Python (Required)
+
+If you do not already have Python 3.8 or newer installed, follow these steps:
+
+1. Go to the official Python download page: https://www.python.org/downloads/
+2. Click the yellow "Download Python" button (the latest version is recommended).
+3. Run the downloaded installer.
+4. **Important:** On the first screen, check the box that says "Add Python to PATH" before clicking "Install Now".
+5. Complete the installation.
+6. To verify Python is installed, open a terminal (Command Prompt on Windows, Terminal on Mac/Linux) and run:
+   ```bash
+   python --version
+   ```
+   You should see something like `Python 3.10.0` or higher.
+
+Now you are ready to continue with the Quick Start below!
+
 ## 🚀 Quick Start
 
 **Clone the repository:**
@@ -26,7 +43,28 @@ cd tg-contacts-exporter
 1. Copy `.env.example` to `.env` and fill in your Telegram and Google credentials.
 2. Download your Google `credentials.json` and place it in this folder.
 3. Create a Google Sheet named `Telegram Contacts` and share it with your service account email.
-4. Run the exporter:
+4. **Important:** Activate the Google Drive API for your Google Cloud project at https://console.cloud.google.com/apis/library/drive.googleapis.com
+
+## ⚡️ Testing with a Few Contacts (Recommended)
+
+**Note:** Running the script for all contacts may take a few minutes (or longer if you have many contacts), due to Telegram's rate limits. It's a good idea to test with just 10 contacts first:
+
+1. Open `export_telegram_contacts.py` in a text editor.
+2. Find the line:
+   ```python
+   for user in contacts.users:
+   ```
+3. Change it to process only the first 10 contacts:
+   ```python
+   for user in contacts.users[:10]:
+   ```
+4. Run the script and check your Google Sheet.
+5. Once you confirm it works, change the line back to process all contacts:
+   ```python
+   for user in contacts.users:
+   ```
+
+5. Run the exporter:
    ```bash
    python export_telegram_contacts.py
    ```
@@ -101,30 +139,6 @@ Automatically export and categorize your Telegram contacts to Google Sheets.
 - Never commit your `.env` file or `credentials.json` to version control
 - Keep your API credentials secure
 - Regularly rotate your API credentials if possible
-
-## Testing with a Few Contacts (Recommended)
-
-**Telegram enforces rate limits when fetching full profile information for many contacts.**
-To avoid long waits or being temporarily blocked, you can test the exporter with just a few contacts first:
-
-1. Open `export_telegram_contacts.py` in a text editor.
-2. Find the line:
-   ```python
-   for user in contacts.users:
-   ```
-3. Change it to process only the first 10 contacts:
-   ```python
-   for user in contacts.users[:10]:
-   ```
-4. Run the script and check your Google Sheet.
-5. Once you confirm it works, change the line back to process all contacts:
-   ```python
-   for user in contacts.users:
-   ```
-
-**Note:**
-- Exporting all contacts may take a long time and you may see messages about "flood wait" or sleeping. This is normal and is due to Telegram's rate limits.
-- Be patient, or run the script in batches if you have many contacts.
 
 ## Screenshots
 
