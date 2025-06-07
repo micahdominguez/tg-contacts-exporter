@@ -45,7 +45,7 @@ cd tg-contacts-exporter
 3. Create a Google Sheet named `Telegram Contacts` and share it with your service account email.
 4. **Important:** Activate the Google Drive API for your Google Cloud project at https://console.cloud.google.com/apis/library/drive.googleapis.com
 
-## ⚡️ Testing with a Few Contacts (Recommended)
+### ⚡️ Testing with a Few Contacts (Recommended)
 
 **Note:** Running the script for all contacts may take a few minutes (or longer if you have many contacts), due to Telegram's rate limits. It's a good idea to test with just 10 contacts first:
 
@@ -70,8 +70,6 @@ cd tg-contacts-exporter
    ```
 
 **Check your Google Sheet for your exported contacts!**
-
-See below for screenshots and more details.
 
 Automatically export and categorize your Telegram contacts to Google Sheets.
 
