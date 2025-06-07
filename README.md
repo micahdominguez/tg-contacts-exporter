@@ -45,43 +45,6 @@ cd tg-contacts-exporter
 3. Create a Google Sheet named `Telegram Contacts` and share it with your service account email.
 4. **Important:** Activate the Google Drive API for your Google Cloud project at https://console.cloud.google.com/apis/library/drive.googleapis.com
 
-### ⚡️ Testing with a Few Contacts (Recommended)
-
-**Note:** Running the script for all contacts may take a few minutes (or longer if you have many contacts), due to Telegram's rate limits. It's a good idea to test with just 10 contacts first:
-
-1. Open `export_telegram_contacts.py` in a text editor.
-2. Find the line:
-   ```python
-   for user in contacts.users:
-   ```
-3. Change it to process only the first 10 contacts:
-   ```python
-   for user in contacts.users[:10]:
-   ```
-4. Run the script and check your Google Sheet.
-5. Once you confirm it works, change the line back to process all contacts:
-   ```python
-   for user in contacts.users:
-   ```
-
-5. Run the exporter:
-   ```bash
-   python export_telegram_contacts.py
-   ```
-
-**Check your Google Sheet for your exported contacts!**
-
-Automatically export and categorize your Telegram contacts to Google Sheets.
-
-## Features
-
-- Direct integration with Telegram API
-- Automatic contact categorization
-- Google Sheets integration
-- Detailed logging
-- Error handling
-- Environment variable configuration
-
 ## Setup Instructions
 
 1. Install dependencies:
@@ -114,10 +77,42 @@ Automatically export and categorize your Telegram contacts to Google Sheets.
      GOOGLE_SHEET_NAME=Telegram Contacts
      ```
 
+### ⚡️ Testing with a Few Contacts (Recommended)
+
+**Note:** Running the script for all contacts may take a few minutes (or longer if you have many contacts), due to Telegram's rate limits. It's a good idea to test with just 10 contacts first:
+
+1. Open `export_telegram_contacts.py` in a text editor.
+2. Find the line:
+   ```python
+   for user in contacts.users:
+   ```
+3. Change it to process only the first 10 contacts:
+   ```python
+   for user in contacts.users[:10]:
+   ```
+4. Run the script and check your Google Sheet.
+5. Once you confirm it works, change the line back to process all contacts:
+   ```python
+   for user in contacts.users:
+   ```
+
 5. Run the script:
    ```bash
    python export_telegram_contacts.py
    ```
+
+**Check your Google Sheet for your exported contacts!**
+
+Automatically export and categorize your Telegram contacts to Google Sheets.
+
+## Features
+
+- Direct integration with Telegram API
+- Automatic contact categorization
+- Google Sheets integration
+- Detailed logging
+- Error handling
+- Environment variable configuration
 
 ## Customization
 
