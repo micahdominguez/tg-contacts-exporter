@@ -1,5 +1,40 @@
 # Telegram Contacts Exporter
 
+## 🚀 Quick Start
+
+**Clone the repository:**
+```bash
+git clone https://github.com/micahdominguez/tg-contacts-exporter.git
+cd tg-contacts-exporter
+```
+
+**Run the setup script:**
+
+- **Windows:**  
+  Double-click `setup.bat` or run:
+  ```bash
+  setup.bat
+  ```
+
+- **Mac/Linux:**  
+  Open a terminal and run:
+  ```bash
+  bash setup.sh
+  ```
+
+**Follow the on-screen instructions:**
+1. Copy `.env.example` to `.env` and fill in your Telegram and Google credentials.
+2. Download your Google `credentials.json` and place it in this folder.
+3. Create a Google Sheet named `Telegram Contacts` and share it with your service account email.
+4. Run the exporter:
+   ```bash
+   python export_telegram_contacts.py
+   ```
+
+**Check your Google Sheet for your exported contacts!**
+
+See below for screenshots and more details.
+
 Automatically export and categorize your Telegram contacts to Google Sheets.
 
 ## Features
@@ -66,36 +101,6 @@ Automatically export and categorize your Telegram contacts to Google Sheets.
 - Never commit your `.env` file or `credentials.json` to version control
 - Keep your API credentials secure
 - Regularly rotate your API credentials if possible
-
-## Quick Start
-
-### Windows
-1. Double-click `setup.bat` or run it from the command prompt:
-   ```
-   setup.bat
-   ```
-2. Follow the on-screen instructions to:
-   - Copy `.env.example` to `.env` and fill in your Telegram and Google credentials.
-   - Download your Google `credentials.json` and place it in this folder.
-   - Create a Google Sheet named "Telegram Contacts" and share it with your service account email.
-   - Run the exporter script:
-     ```
-     python export_telegram_contacts.py
-     ```
-
-### Mac/Linux
-1. Open a terminal and run:
-   ```sh
-   bash setup.sh
-   ```
-2. Follow the on-screen instructions to:
-   - Copy `.env.example` to `.env` and fill in your Telegram and Google credentials.
-   - Download your Google `credentials.json` and place it in this folder.
-   - Create a Google Sheet named "Telegram Contacts" and share it with your service account email.
-   - Run the exporter script:
-     ```sh
-     python export_telegram_contacts.py
-     ```
 
 ## Testing with a Few Contacts (Recommended)
 
