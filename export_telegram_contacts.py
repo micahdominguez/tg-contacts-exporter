@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import logging
 from datetime import datetime
 from telethon.tl.functions.contacts import GetContactsRequest
+from telethon.tl.functions.users import GetFullUserRequest
 
 # Set up logging
 logging.basicConfig(
@@ -80,7 +81,7 @@ class TelegramContactExporter:
             
             # Clear existing data and add headers
             sheet.clear()
-            headers = ['First Name', 'Last Name', 'Username', 'Phone', 'Category', 'Last Updated']
+            headers = ['First Name', 'Last Name', 'Username', 'Phone', 'Category', 'Bio', 'Company/Project', 'Last Updated']
             sheet.append_row(headers)
             
             rows = []
@@ -89,9 +90,17 @@ class TelegramContactExporter:
                 last = user.last_name or ''
                 username = user.username or ''
                 phone = user.phone or ''
+                # Fetch full user info to get bio
+                try:
+                    full = await client(GetFullUserRequest(user.id))
+                    bio = getattr(full.full_user, 'about', '')
+                except Exception as e:
+                    bio = ''
+                    logging.warning(f"Could not fetch bio for user {username or phone}: {e}")
                 category = self.categorize_contact(first, last, username)
+                company = ''  # Leave empty for manual entry
                 last_updated = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                rows.append([first, last, username, phone, category, last_updated])
+                rows.append([first, last, username, phone, category, bio, company, last_updated])
             
             if rows:
                 sheet.append_rows(rows)

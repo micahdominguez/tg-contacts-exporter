@@ -65,4 +65,72 @@ Automatically export and categorize your Telegram contacts to Google Sheets.
 
 - Never commit your `.env` file or `credentials.json` to version control
 - Keep your API credentials secure
-- Regularly rotate your API credentials if possible 
+- Regularly rotate your API credentials if possible
+
+## Quick Start
+
+### Windows
+1. Double-click `setup.bat` or run it from the command prompt:
+   ```
+   setup.bat
+   ```
+2. Follow the on-screen instructions to:
+   - Copy `.env.example` to `.env` and fill in your Telegram and Google credentials.
+   - Download your Google `credentials.json` and place it in this folder.
+   - Create a Google Sheet named "Telegram Contacts" and share it with your service account email.
+   - Run the exporter script:
+     ```
+     python export_telegram_contacts.py
+     ```
+
+### Mac/Linux
+1. Open a terminal and run:
+   ```sh
+   bash setup.sh
+   ```
+2. Follow the on-screen instructions to:
+   - Copy `.env.example` to `.env` and fill in your Telegram and Google credentials.
+   - Download your Google `credentials.json` and place it in this folder.
+   - Create a Google Sheet named "Telegram Contacts" and share it with your service account email.
+   - Run the exporter script:
+     ```sh
+     python export_telegram_contacts.py
+     ```
+
+## Testing with a Few Contacts (Recommended)
+
+**Telegram enforces rate limits when fetching full profile information for many contacts.**
+To avoid long waits or being temporarily blocked, you can test the exporter with just a few contacts first:
+
+1. Open `export_telegram_contacts.py` in a text editor.
+2. Find the line:
+   ```python
+   for user in contacts.users:
+   ```
+3. Change it to process only the first 10 contacts:
+   ```python
+   for user in contacts.users[:10]:
+   ```
+4. Run the script and check your Google Sheet.
+5. Once you confirm it works, change the line back to process all contacts:
+   ```python
+   for user in contacts.users:
+   ```
+
+**Note:**
+- Exporting all contacts may take a long time and you may see messages about "flood wait" or sleeping. This is normal and is due to Telegram's rate limits.
+- Be patient, or run the script in batches if you have many contacts.
+
+## Screenshots
+
+### Exported Telegram Contacts in Google Sheets
+![Exported Google Sheet with bios](screenshots/google-sheet-example.png)
+*Your contacts, including bios, exported to Google Sheets.*
+
+### Setup Instructions in Terminal
+![Setup instructions in terminal](screenshots/setup-instructions.png)
+*Quick setup instructions shown in the terminal for easy onboarding.*
+
+### .env Example File
+![.env.example file](screenshots/env-example.png)
+*Example .env file—fill in your own credentials as shown.* 
